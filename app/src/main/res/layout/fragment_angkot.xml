@@ -19,13 +19,14 @@
         android:textColor="@color/colorSecondary"
         android:id="@+id/terminalTextView" />
 
-    <EditText
-        android:layout_width="342dp"
+    <AutoCompleteTextView
+        android:id="@+id/terminalAutoCompleteTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
-        android:textColor="@color/colorText"
-        android:textCursorDrawable="@drawable/color_cursor"
-        android:id="@+id/terminalEditText" />
+        android:textColor="@color/colorText"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,13 +36,14 @@
         android:textColor="@color/colorSecondary"
         android:id="@+id/angkotTextView" />
 
-    <EditText
-        android:layout_width="342dp"
+    <AutoCompleteTextView
+        android:id="@+id/angkotAutoCompleteTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
-        android:textColor="@color/colorText"
-        android:textCursorDrawable="@drawable/color_cursor"
-        android:id="@+id/angkotEditText"/>
+        android:textColor="@color/colorText"/>
 
     <Button
         android:text="CARI"
@@ -84,7 +86,7 @@
                 android:id="@+id/nomorAngkotTextView"
                 android:text="D11"
                 android:textColor="@color/colorText"
-                android:textSize="50dp"
+                android:textSize="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
@@ -98,7 +100,7 @@
                 android:layout_alignLeft="@+id/nomorAngkotTextView"
                 android:layout_alignStart="@+id/nomorAngkotTextView"
                 android:layout_below="@+id/nomorAngkotTextView"
-                android:layout_alignBottom="@+id/ruteTextView" />
+                android:layout_alignBottom="@+id/gambarAngkot" />
 
             <ImageView
                 android:layout_width="100dp"
