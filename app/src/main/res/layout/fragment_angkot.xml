@@ -1,13 +1,124 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.debatkusir.rutenia.Fragment.RouteFragment">
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical"
+    android:background="#fbfbfb"
+    android:weightSum="1">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Ini buat cari angkot" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Pilih Terminal"
+        android:textColor="@color/colorSecondary"
+        android:id="@+id/terminalTextView" />
 
-</FrameLayout>
+    <EditText
+        android:layout_width="342dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textColor="@color/colorText"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:id="@+id/terminalEditText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Pilih Angkot"
+        android:textColor="@color/colorSecondary"
+        android:id="@+id/angkotTextView" />
+
+    <EditText
+        android:layout_width="342dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textColor="@color/colorText"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:id="@+id/angkotEditText"/>
+
+    <Button
+        android:text="CARI"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="right"
+        android:textSize="17sp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:background="@color/colorPrimary"
+        android:id="@+id/cariButton" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="355dp"
+        android:layout_height="283dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/cardView"
+        card_view:cardBackgroundColor="#f2f2f2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rute"
+                android:textColor="@color/colorSecondary"
+                android:textSize="14dp"
+                android:id="@+id/ruteTextView"
+                android:layout_below="@+id/gambarAngkot"
+                android:layout_alignLeft="@+id/gambarAngkot"
+                android:layout_alignStart="@+id/gambarAngkot" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nomorAngkotTextView"
+                android:text="D11"
+                android:textColor="@color/colorText"
+                android:textSize="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/detailAngkotTextView"
+                android:text="Terminal Depok - Pasar Minggu"
+                android:textColor="@color/colorText"
+                android:textSize="18dp"
+                android:layout_alignLeft="@+id/nomorAngkotTextView"
+                android:layout_alignStart="@+id/nomorAngkotTextView"
+                android:layout_below="@+id/nomorAngkotTextView"
+                android:layout_alignBottom="@+id/ruteTextView" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/gambarAngkot"
+                android:src="@mipmap/angkot1"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/nomorAngkotTextView"
+                android:layout_toStartOf="@+id/nomorAngkotTextView"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp">
+            </ImageView>
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapview"
+                android:layout_width="320dp"
+                android:layout_height="150dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/ruteTextView"
+                android:layout_alignStart="@+id/ruteTextView" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
