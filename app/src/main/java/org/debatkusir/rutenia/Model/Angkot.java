@@ -7,14 +7,14 @@ package org.debatkusir.rutenia.Model;
 public class Angkot {
     String id;
     String name;
-    Terminal terminalStart;
-    Terminal terminalEnd;
+    Place transitStop1;
+    Place transitStop2;
 
-    public Angkot(String id, String name, Terminal terminalEnd, Terminal terminalStart) {
+    public Angkot(String id, String name, Place transitStop1, Place transitStop2) {
         this.id = id;
         this.name = name;
-        this.terminalEnd = terminalEnd;
-        this.terminalStart = terminalStart;
+        this.transitStop1 = transitStop1;
+        this.transitStop2 = transitStop2;
     }
 
     public String getId() {
@@ -33,19 +33,19 @@ public class Angkot {
         this.name = name;
     }
 
-    public Terminal getTerminalEnd() {
-        return terminalEnd;
+    public Place getTransitStop2() {
+        return transitStop2;
     }
 
-    public void setTerminalEnd(Terminal terminalEnd) {
-        this.terminalEnd = terminalEnd;
+    public void setTransitStop2(Place transitStop2) {
+        this.transitStop2 = transitStop2;
     }
 
-    public Terminal getTerminalStart() {
-        return terminalStart;
+    public Place getTransitStop1() {
+        return transitStop1;
     }
 
-    public void setTerminalStart(Terminal terminalStart) {
-        this.terminalStart = terminalStart;
+    public void setTransitStop1(Place transitStop1) {
+        this.transitStop1 = transitStop1;
     }
 }
