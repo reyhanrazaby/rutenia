@@ -1,25 +1,40 @@
 package org.debatkusir.rutenia;
 
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TableLayout;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.PolyUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private AHBottomNavigation bottomNavigation;
+    private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
+    private AHBottomNavigationViewPager viewPager;
+    private AHBottomNavigationAdapter navigationAdapter;
+    private PagerAdapter adapter;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,43 +45,43 @@ public class MapsActivity extends AppCompatActivity {
         setTitle("Rutenia");
         setSupportActionBar(toolbar);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Rute"));
-        tabLayout.addTab(tabLayout.newTab().setText("Angkot"));
+        bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
+        viewPager = (AHBottomNavigationViewPager) findViewById(R.id.view_pager);
 
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.colorSecondary));
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.menu_route, R.drawable.icon_route, R.color.colorSecondary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.menu_angkot, R.drawable.icon_angkot, R.color.colorSecondary);
+        bottomNavigationItems.add(item1);
+        bottomNavigationItems.add(item2);
+        bottomNavigation.addItems(bottomNavigationItems);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        PagerAdapter adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
+        bottomNavigation.setAccentColor(ContextCompat.getColor(this, R.color.colorWhite));
+        bottomNavigation.setInactiveColor(Color.parseColor("#fffcd2"));
+        bottomNavigation.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+
+        adapter = new PagerAdapter (getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+
+        LatLng startPoint = new LatLng(-6.355163, 106.842950);
+        ArrayList<LatLng> polyline = new ArrayList<>();
+        polyline.add(new LatLng(-6.354114, 106.842958));
+        polyline.add(new LatLng(-6.354327, 106.842695));
+        polyline.add(new LatLng(-6.356241, 106.842781));
+
+        Log.d("anjas",""+ PolyUtil.isLocationOnPath(startPoint, polyline, true, 50));
+
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+            public boolean onTabSelected(int position, boolean wasSelected) {
+                viewPager.setCurrentItem(position, false);
+                return true;
             }
+        });
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
+        bottomNavigation.setOnNavigationPositionListener(new AHBottomNavigation.OnNavigationPositionListener() {
+            @Override public void onPositionChange(int y) {
+                Log.d("DemoActivity", "BottomNavigation Position: " + y);
             }
         });
     }
-
-
-    /*@Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }*/
 }
