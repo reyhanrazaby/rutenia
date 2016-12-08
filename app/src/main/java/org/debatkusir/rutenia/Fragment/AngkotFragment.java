@@ -20,6 +20,8 @@ public class AngkotFragment extends Fragment {
     AutoCompleteTextView termninalAutoComplete;
     ArrayAdapter<String> terminalAutoCompleteAdapter;
     String[] terminalItem = new String[] {""};
+    int idTerminal;
+    String[] angkotItem = new String[] {""};
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -27,7 +29,6 @@ public class AngkotFragment extends Fragment {
 
         terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, terminalItem);
         termninalAutoComplete = (AutoCompleteTextView) view.findViewById(R.id.terminalAutoCompleteTextView);
-        termninalAutoComplete.setAdapter(terminalAutoCompleteAdapter);
 
         termninalAutoComplete.addTextChangedListener(new TextWatcher() {
             @Override
@@ -37,10 +38,12 @@ public class AngkotFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence input, int start, int before, int count) {
-                terminalItem = Rutenia.getLocalDatabase().getTerminal(input.toString());
-                terminalAutoCompleteAdapter.notifyDataSetChanged();
-                terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, terminalItem);
-                termninalAutoComplete.setAdapter(terminalAutoCompleteAdapter);
+                if (input.length() > 1) {
+                    terminalItem = Rutenia.getLocalDatabase().getTerminal(input.toString());
+                    terminalAutoCompleteAdapter.notifyDataSetChanged();
+                    terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, terminalItem);
+                    termninalAutoComplete.setAdapter(terminalAutoCompleteAdapter);
+                }
             }
 
             @Override

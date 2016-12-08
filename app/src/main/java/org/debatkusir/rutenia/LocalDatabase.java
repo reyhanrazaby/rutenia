@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by Reyhan on 12/8/2016.
@@ -126,7 +130,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
 
     public String[] getTerminal(String searchTerm){
         final int FOUND_LIMIT = 5;
-        String[] result = new String[FOUND_LIMIT];
+        ArrayList<String> arr = new ArrayList<>();
 
         String sql = "";
         sql += "SELECT * FROM " + TABLE_PLACE;
@@ -140,11 +144,16 @@ public class LocalDatabase extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 String name = cursor.getString(cursor.getColumnIndex(PLACE_NAME));
-                result[count] = name;
+                arr.add(name);
 
                 count++;
             } while (cursor.moveToNext());
         }
+        String[] result = new String[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            result[i] = arr.get(i);
+        }
+        Log.d("anjay","result: " + arr.size());
         return result;
     }
 }
