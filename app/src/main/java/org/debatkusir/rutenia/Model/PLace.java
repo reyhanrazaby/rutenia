@@ -13,7 +13,7 @@ public class Place {
     LatLng coordinate;
     boolean isTransitStop;
 
-    public Place(String city, LatLng coordinate, String id, boolean isTransitStop, String name) {
+    public Place(String name, String city, LatLng coordinate, String id, boolean isTransitStop) {
         this.city = city;
         this.coordinate = coordinate;
         this.id = id;

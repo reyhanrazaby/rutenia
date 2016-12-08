@@ -1,5 +1,7 @@
 package org.debatkusir.rutenia;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -9,31 +11,31 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class LocalDatabase extends SQLiteOpenHelper {
 
-    final String TABLE_PLACE = "PLACE";
-    final String TABLE_ANGKOT = "ANGKOT";
-    final String TABLE_ROUTE = "ROUTE";
-    final String TABLE_WAYPOINT = "WAYPOINT";
+    private final String TABLE_PLACE = "PLACE";
+    private final String TABLE_ANGKOT = "ANGKOT";
+    private final String TABLE_ROUTE = "ROUTE";
+    private final String TABLE_WAYPOINT = "WAYPOINT";
 
-    final String PLACE_ID = "Id";
-    final String PLACE_NAME = "Name";
-    final String PLACE_CITY = "City";
-    final String PLACE_COORDINATE = "Coordinate";
-    final String PLACE_IS_TRANSIT_STOP = "Is_transit_stop";
+    private final String PLACE_ID = "Id";
+    private final String PLACE_NAME = "Name";
+    private final String PLACE_CITY = "City";
+    private final String PLACE_COORDINATE = "Coordinate";
+    private final String PLACE_IS_TRANSIT_STOP = "Is_transit_stop";
 
-    final String ANGKOT_ID = "Id";
-    final String ANGKOT_NAME = "Name";
-    final String ANGKOT_PHOTO = "Photo";
-    final String ANGKOT_ID_TRANSIT_STOP_1 = "Id_transit_stop_1";
-    final String ANGKOT_ID_TRANSIT_STOP_2 = "Id_terminal_stop_2";
+    private final String ANGKOT_ID = "Id";
+    private final String ANGKOT_NAME = "Name";
+    private final String ANGKOT_PHOTO = "Photo";
+    private final String ANGKOT_ID_TRANSIT_STOP_1 = "Id_transit_stop_1";
+    private final String ANGKOT_ID_TRANSIT_STOP_2 = "Id_terminal_stop_2";
 
-    final String ROUTE_ID = "Id";
-    final String ROUTE_IS_ALTERNATIVE = "Is_alternative";
-    final String ROUTE_ID_ANGKOT = "Id_angkot";
+    private final String ROUTE_ID = "Id";
+    private final String ROUTE_IS_ALTERNATIVE = "Is_alternative";
+    private final String ROUTE_ID_ANGKOT = "Id_angkot";
 
-    final String WAYPOINT_ID_ROUTE = "Id_route";
-    final String WAYPOINT_LATITUDE = "Latitude";
-    final String WAYPOINT_LONGITUDE = "Longitude";
-    final String WAYPOINT_INDEX = "Index";
+    private final String WAYPOINT_ID_ROUTE = "Id_route";
+    private final String WAYPOINT_LATITUDE = "Latitude";
+    private final String WAYPOINT_LONGITUDE = "Longitude";
+    private final String WAYPOINT_ORDER = "Order";
 
     public LocalDatabase() {
         super(Rutenia.getAppContext(), "1" , null, 1);
@@ -48,7 +50,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
                         PLACE_CITY + " TEXT," +
                         PLACE_COORDINATE + " TEXT NOT NULL, " +
                         PLACE_IS_TRANSIT_STOP + " INTEGER NOT NULL, " +
-                        "PRIMARY KEY (" + PLACE_ID + ")," +
+                        "PRIMARY KEY (" + PLACE_ID + ")" +
                         ");"
         );
 
@@ -66,7 +68,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
                         "REFERENCES " + TABLE_PLACE + "(" + PLACE_ID + ")" +
                         ");"
         );
-
+/*
         db.execSQL(
                 "CREATE TABLE " + TABLE_ROUTE + " (" +
                         ROUTE_ID + " INTEGER NOT NULL, " +
@@ -75,21 +77,20 @@ public class LocalDatabase extends SQLiteOpenHelper {
                         "PRIMARY KEY (" + ROUTE_ID + ")," +
                         "FOREIGN KEY (" + ROUTE_ID_ANGKOT + ")" +
                         "REFERENCES " + TABLE_ANGKOT + "(" + ANGKOT_ID + ")" +
-
                         ");"
-        );
+        );*/
 
-        db.execSQL(
+/*        db.execSQL(
                 "CREATE TABLE " + TABLE_WAYPOINT + " (" +
-                        WAYPOINT_INDEX + " INTEGER NOT NULL, " +
-                        WAYPOINT_LONGITUDE + " FLOAT NOT NULL," +
-                        WAYPOINT_LATITUDE + " FLOAT NOT NULL," +
-                        WAYPOINT_ID_ROUTE + " INTEGER NOT NULL," +
-                        "PRIMARY KEY (" + WAYPOINT_INDEX + ", " + WAYPOINT_LONGITUDE + ", " + WAYPOINT_LATITUDE + ", " + WAYPOINT_ID_ROUTE + ")," +
-                        "FOREIGN KEY (" + WAYPOINT_ID_ROUTE + ")" +
+                        WAYPOINT_ID_ROUTE + " INTEGER NOT NULL, " +
+                        WAYPOINT_ORDER + " INTEGER NOT NULL, " +
+                        WAYPOINT_LONGITUDE + " FLOAT NOT NULL, " +
+                        WAYPOINT_LATITUDE + " FLOAT NOT NULL, " +
+                        "PRIMARY KEY (" + WAYPOINT_LONGITUDE + ", " + WAYPOINT_ORDER + ", " + WAYPOINT_LATITUDE + ", " + WAYPOINT_ID_ROUTE + ")," +
+                        "FOREIGN KEY (" + WAYPOINT_ID_ROUTE + ") " +
                         "REFERENCES " + TABLE_ROUTE + "(" + ROUTE_ID + ")" +
                         ");"
-        );
+        );*/
     }
 
     @Override
@@ -108,4 +109,43 @@ public class LocalDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WAYPOINT + " ;");
         onCreate(db);
     }
+
+    public void insertPlace(int id, String name, String city, String coordinate, boolean isTransitStop) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(PLACE_ID, id);
+        contentValues.put(PLACE_NAME, name);
+        contentValues.put(PLACE_CITY, city);
+        contentValues.put(PLACE_COORDINATE, coordinate);
+        contentValues.put(PLACE_IS_TRANSIT_STOP, isTransitStop ? "1" : "0");
+
+        database.insert(TABLE_PLACE, null, contentValues);
+        database.close();
+    }
+
+    public String[] getTerminal(String searchTerm){
+        final int FOUND_LIMIT = 5;
+        String[] result = new String[FOUND_LIMIT];
+
+        String sql = "";
+        sql += "SELECT * FROM " + TABLE_PLACE;
+        sql += " WHERE " + PLACE_NAME + " LIKE '%" + searchTerm + "%'";
+        sql += " LIMIT 0," + FOUND_LIMIT;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(sql, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(cursor.getColumnIndex(PLACE_NAME));
+                result[count] = name;
+
+                count++;
+            } while (cursor.moveToNext());
+        }
+        return result;
+    }
 }
+
