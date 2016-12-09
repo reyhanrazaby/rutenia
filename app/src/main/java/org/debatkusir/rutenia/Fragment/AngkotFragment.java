@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import org.debatkusir.rutenia.R;
 import org.debatkusir.rutenia.Rutenia;
@@ -18,17 +19,26 @@ import org.debatkusir.rutenia.Rutenia;
 public class AngkotFragment extends Fragment {
 
     AutoCompleteTextView termninalAutoComplete;
+    AutoCompleteTextView angkotAutoComplete;
     ArrayAdapter<String> terminalAutoCompleteAdapter;
+    ArrayAdapter<String> angkotAutoCompleteAdapter;
     String[] terminalItem = new String[] {""};
-    int idTerminal;
     String[] angkotItem = new String[] {""};
+    String terminalSelected = "";
+    String angkotSelected = "";
+
+    TextView tes;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, terminalItem);
+        tes = (TextView) view.findViewById(R.id.tesTextView);
         termninalAutoComplete = (AutoCompleteTextView) view.findViewById(R.id.terminalAutoCompleteTextView);
+
+        terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, terminalItem);
+        termninalAutoComplete.setAdapter(terminalAutoCompleteAdapter);
+
 
         termninalAutoComplete.addTextChangedListener(new TextWatcher() {
             @Override
@@ -38,17 +48,17 @@ public class AngkotFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence input, int start, int before, int count) {
-                if (input.length() > 1) {
-                    terminalItem = Rutenia.getLocalDatabase().getTerminal(input.toString());
-                    terminalAutoCompleteAdapter.notifyDataSetChanged();
-                    terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, terminalItem);
-                    termninalAutoComplete.setAdapter(terminalAutoCompleteAdapter);
-                }
+                terminalItem = Rutenia.getLocalDatabase().getTerminal(input.toString());
+                terminalAutoCompleteAdapter.notifyDataSetChanged();
+                terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, terminalItem);
+                termninalAutoComplete.setAdapter(terminalAutoCompleteAdapter);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                if(s.length() > 5) {
+                    tes.setText(s);
+                }
             }
         });
     }
