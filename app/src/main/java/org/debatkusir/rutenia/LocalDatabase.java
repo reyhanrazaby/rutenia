@@ -157,7 +157,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
         int count = 0;
         if (cursor.moveToFirst()) {
             do {
-                String name = cursor.getString(cursor.getColumnIndex(PLACE_NAME));
+                String name = cursor.getString(cursor.getColumnIndex(ANGKOT_NAME));
                 arr.add(name);
 
                 count++;

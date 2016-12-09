@@ -42,6 +42,7 @@ public class AngkotFragment extends Fragment {
         //Casting variable dari XML
         tes = (TextView) view.findViewById(R.id.tesTextView);
         termninalAutoComplete = (AutoCompleteTextView) view.findViewById(R.id.terminalAutoCompleteTextView);
+        angkotAutoComplete = (AutoCompleteTextView) view.findViewById(R.id.angkotAutoCompleteTextView);
 
         //Inisiasi local database
         localDatabase = new LocalDatabase();
@@ -55,7 +56,6 @@ public class AngkotFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence input, int start, int before, int count) {
                 terminalItem = Rutenia.getLocalDatabase().getTerminal(input.toString());
-                //terminalAutoCompleteAdapter.notifyDataSetChanged();
                 terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, terminalItem);
                 termninalAutoComplete.setAdapter(terminalAutoCompleteAdapter);
             }
@@ -67,7 +67,6 @@ public class AngkotFragment extends Fragment {
                     if(arrIdTerminal.length > 0) {
                         terminalId = Integer.parseInt(arrIdTerminal[0]);
                         String[] arrAngkot = localDatabase.getAngkot(terminalId);
-                        tes.setText(arrAngkot[0]);
                     } else {
                         tes.setText("Angkot tidak tersedia");
                     }
@@ -83,24 +82,14 @@ public class AngkotFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence input, int start, int before, int count) {
-                angkotItem = Rutenia.getLocalDatabase().getTerminal(input.toString());
-                angkotAutoCompleteAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, terminalItem);
-                angkotAutoComplete.setAdapter(terminalAutoCompleteAdapter);
+                angkotItem = Rutenia.getLocalDatabase().getAngkot(terminalId);
+                angkotAutoCompleteAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, angkotItem);
+                angkotAutoComplete.setAdapter(angkotAutoCompleteAdapter);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length() > 0) {
-                    String[] arrIdTerminal = localDatabase.getIdTerminal(s.toString());
-                    if(arrIdTerminal.length > 0) {
-                        terminalId = Integer.parseInt(arrIdTerminal[0]);
-                        String[] arrAngkot = localDatabase.getAngkot(terminalId);
-                        tes.setText(arrAngkot[0]);
 
-                    } else {
-                        tes.setText("Angkot tidak tersedia");
-                    }
-                }
             }
         });
     }
