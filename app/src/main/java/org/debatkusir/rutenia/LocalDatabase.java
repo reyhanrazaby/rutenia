@@ -142,14 +142,12 @@ public class LocalDatabase extends SQLiteOpenHelper {
         database.close();
     }
 
-    public String[] getAngkot (int searchTerm) {
-        final int FOUND_LIMIT = 5;
+    public String[] getAngkot (int idAngkot) {
         ArrayList<String> arr = new ArrayList<>();
 
         String sql = "";
         sql += "SELECT * FROM " + TABLE_ANGKOT;
-        sql += " WHERE " + ANGKOT_ID_TRANSIT_STOP_1 + " LIKE '%" + searchTerm + "%'";
-        sql += " LIMIT 0," + FOUND_LIMIT;
+        sql += " WHERE " + ANGKOT_ID_TRANSIT_STOP_1 + " LIKE '%" + idAngkot + "%'";
 
         SQLiteDatabase db = this.getWritableDatabase();
 

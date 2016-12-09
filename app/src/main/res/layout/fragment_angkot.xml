@@ -36,22 +36,14 @@
         android:textColor="@color/colorSecondary"
         android:id="@+id/angkotTextView" />
 
-    <AutoCompleteTextView
-        android:id="@+id/angkotAutoCompleteTextView"
+    <Spinner
+        android:id="@+id/angkotSpinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
-        android:textColor="@color/colorText"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text=" "
-        android:textColor="@color/colorSecondary"
-        android:id="@+id/tesTextView" />
+        android:textColor="@color/colorText" />
 
     <Button
         android:text="CARI"
@@ -114,7 +106,7 @@
                 android:id="@+id/nomorAngkotTextView"
                 android:text="D11"
                 android:textColor="@color/colorText"
-                android:textSize="40dp"
+                android:textSize="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
