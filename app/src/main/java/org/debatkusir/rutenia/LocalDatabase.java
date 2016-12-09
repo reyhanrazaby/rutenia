@@ -128,7 +128,21 @@ public class LocalDatabase extends SQLiteOpenHelper {
         database.close();
     }
 
-    public String[] getAngkot (String searchTerm) {
+    public void insertAngkot(int id, String name, String photo, int idTerminal1, int idTerminal2) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ANGKOT_ID, id);
+        contentValues.put(ANGKOT_NAME, name);
+        contentValues.put(ANGKOT_PHOTO, photo);
+        contentValues.put(ANGKOT_ID_TRANSIT_STOP_1, idTerminal1);
+        contentValues.put(ANGKOT_ID_TRANSIT_STOP_2, idTerminal2);
+
+        database.insert(TABLE_ANGKOT, null, contentValues);
+        database.close();
+    }
+
+    public String[] getAngkot (int searchTerm) {
         final int FOUND_LIMIT = 5;
         ArrayList<String> arr = new ArrayList<>();
 
@@ -172,6 +186,35 @@ public class LocalDatabase extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 String name = cursor.getString(cursor.getColumnIndex(PLACE_NAME));
+                arr.add(name);
+
+                count++;
+            } while (cursor.moveToNext());
+        }
+        String[] result = new String[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            result[i] = arr.get(i);
+        }
+        Log.d("anjay","result: " + arr.size());
+        return result;
+    }
+
+    public String[] getIdTerminal(String searchTerm){
+        final int FOUND_LIMIT = 5;
+        ArrayList<String> arr = new ArrayList<>();
+
+        String sql = "";
+        sql += "SELECT * FROM " + TABLE_PLACE;
+        sql += " WHERE " + PLACE_NAME + " LIKE '%" + searchTerm + "%'";
+        sql += " LIMIT 0," + FOUND_LIMIT;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(sql, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(cursor.getColumnIndex(PLACE_ID));
                 arr.add(name);
 
                 count++;

@@ -24,6 +24,9 @@ public class Rutenia extends Application {
         localDatabase.insertPlace(1, "Terminal Depok", "Depok", "0,0", true);
         localDatabase.insertPlace(2, "Pasar Pal", "Depok", "0,0", true);
 
+        localDatabase.insertAngkot(0, "D11", "Foto angkot1", 0, 1);
+        localDatabase.insertAngkot(1, "D12", "Foto angkot2", 1, 2);
+
     }
 
     public static Context getAppContext() {
