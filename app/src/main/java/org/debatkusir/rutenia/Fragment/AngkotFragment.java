@@ -19,6 +19,8 @@ import org.debatkusir.rutenia.R;
 import org.debatkusir.rutenia.Rutenia;
 import org.w3c.dom.Text;
 
+import java.util.Arrays;
+
 import static org.debatkusir.rutenia.R.id.nomorAngkotTextView;
 
 public class AngkotFragment extends Fragment {
@@ -73,6 +75,7 @@ public class AngkotFragment extends Fragment {
                         terminalId = Integer.parseInt(arrIdTerminal[0]);
                         angkotItem = Rutenia.getLocalDatabase().getAngkot(terminalId);
                         if(angkotItem.length > 0) {
+                            Arrays.sort(angkotItem);
                             angkotSpinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, angkotItem);
                             angkotSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             angkotSpinner.setAdapter(angkotSpinnerAdapter);
