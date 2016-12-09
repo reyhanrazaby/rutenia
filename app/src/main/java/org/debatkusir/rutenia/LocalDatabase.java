@@ -128,6 +128,34 @@ public class LocalDatabase extends SQLiteOpenHelper {
         database.close();
     }
 
+    public String[] getAngkot (String searchTerm) {
+        final int FOUND_LIMIT = 5;
+        ArrayList<String> arr = new ArrayList<>();
+
+        String sql = "";
+        sql += "SELECT * FROM " + TABLE_ANGKOT;
+        sql += " WHERE " + ANGKOT_ID_TRANSIT_STOP_1 + " LIKE '%" + searchTerm + "%'";
+        sql += " LIMIT 0," + FOUND_LIMIT;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(sql, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(cursor.getColumnIndex(PLACE_NAME));
+                arr.add(name);
+
+                count++;
+            } while (cursor.moveToNext());
+        }
+        String[] result = new String[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            result[i] = arr.get(i);
+        }
+        return result;
+    }
+
     public String[] getTerminal(String searchTerm){
         final int FOUND_LIMIT = 5;
         ArrayList<String> arr = new ArrayList<>();

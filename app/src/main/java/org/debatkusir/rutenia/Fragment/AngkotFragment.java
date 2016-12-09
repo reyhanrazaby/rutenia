@@ -13,19 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import org.debatkusir.rutenia.LocalDatabase;
 import org.debatkusir.rutenia.R;
 import org.debatkusir.rutenia.Rutenia;
 
 public class AngkotFragment extends Fragment {
 
     AutoCompleteTextView termninalAutoComplete;
-    AutoCompleteTextView angkotAutoComplete;
     ArrayAdapter<String> terminalAutoCompleteAdapter;
-    ArrayAdapter<String> angkotAutoCompleteAdapter;
     String[] terminalItem = new String[] {""};
-    String[] angkotItem = new String[] {""};
-    String terminalSelected = "";
-    String angkotSelected = "";
+
+    private static LocalDatabase localDatabase;
 
     TextView tes;
 
@@ -33,12 +31,12 @@ public class AngkotFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Casting variable dari XML
         tes = (TextView) view.findViewById(R.id.tesTextView);
         termninalAutoComplete = (AutoCompleteTextView) view.findViewById(R.id.terminalAutoCompleteTextView);
 
-        terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_dropdown_item_1line, terminalItem);
-        termninalAutoComplete.setAdapter(terminalAutoCompleteAdapter);
-
+        //Inisiasi local database
+        localDatabase = new LocalDatabase();
 
         termninalAutoComplete.addTextChangedListener(new TextWatcher() {
             @Override
@@ -49,15 +47,24 @@ public class AngkotFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence input, int start, int before, int count) {
                 terminalItem = Rutenia.getLocalDatabase().getTerminal(input.toString());
-                terminalAutoCompleteAdapter.notifyDataSetChanged();
+                //terminalAutoCompleteAdapter.notifyDataSetChanged();
                 terminalAutoCompleteAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, terminalItem);
                 termninalAutoComplete.setAdapter(terminalAutoCompleteAdapter);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.length() > 5) {
-                    tes.setText(s);
+                if(s.length() > 0) {
+                    String[] value = localDatabase.getTerminal(s.toString());
+                    if(value.length > 0) {
+                        for(int i = 0; i < value.length; i++) {
+                            tes.append(value[i]);
+                            tes.append("\n");
+                        }
+                        tes.setText(value[0]);
+                    } else {
+                        tes.setText("Angkot tidak tersedia");
+                    }
                 }
             }
         });
@@ -65,9 +72,7 @@ public class AngkotFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_angkot, container, false);
     }
-
 }
