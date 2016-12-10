@@ -24,10 +24,10 @@ public class Rutenia extends Application {
         localDatabase.insertPlace(1, "Terminal Depok", "Depok", "0,0", true);
         localDatabase.insertPlace(2, "Pasar Pal", "Depok", "0,0", true);
 
-        localDatabase.insertAngkot(0, "D11", "Foto angkot1", 0, 1);
-        localDatabase.insertAngkot(1, "D12", "Foto angkot2", 1, 2);
-        localDatabase.insertAngkot(3, "D10", "Foto angkot4", 1, 0);
-        localDatabase.insertAngkot(2, "D13", "Foto angkot3", 2, 0);
+        localDatabase.insertAngkot(0, "D11", "angkot1", 0, 1);
+        localDatabase.insertAngkot(1, "D12", "angkot2", 1, 2);
+        localDatabase.insertAngkot(2, "D13", "angkot3", 1, 0);
+        localDatabase.insertAngkot(3, "D14", "angkot4", 2, 0);
     }
 
     public static Context getAppContext() {

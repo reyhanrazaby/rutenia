@@ -142,12 +142,12 @@ public class LocalDatabase extends SQLiteOpenHelper {
         database.close();
     }
 
-    public String[] getAngkot (int idAngkot) {
+    public String[] getAngkotByTerminalId (int terminalId) {
         ArrayList<String> arr = new ArrayList<>();
 
         String sql = "";
         sql += "SELECT * FROM " + TABLE_ANGKOT;
-        sql += " WHERE " + ANGKOT_ID_TRANSIT_STOP_1 + " LIKE '%" + idAngkot + "%'";
+        sql += " WHERE " + ANGKOT_ID_TRANSIT_STOP_1 + " LIKE '%" + terminalId + "%'";
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -168,6 +168,32 @@ public class LocalDatabase extends SQLiteOpenHelper {
         return result;
     }
 
+    public String[] getGambarAngkot (String nomorAngkot) {
+        ArrayList<String> arr = new ArrayList<>();
+
+        String sql = "";
+        sql += "SELECT * FROM " + TABLE_ANGKOT;
+        sql += " WHERE " + ANGKOT_NAME + " LIKE '%" + nomorAngkot + "%'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(sql, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(cursor.getColumnIndex(ANGKOT_PHOTO));
+                arr.add(name);
+
+                count++;
+            } while (cursor.moveToNext());
+        }
+        String[] result = new String[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            result[i] = arr.get(i);
+        }
+        return result;
+    }
+
     public String[] getTerminal(String searchTerm){
         final int FOUND_LIMIT = 5;
         ArrayList<String> arr = new ArrayList<>();
@@ -175,6 +201,35 @@ public class LocalDatabase extends SQLiteOpenHelper {
         String sql = "";
         sql += "SELECT * FROM " + TABLE_PLACE;
         sql += " WHERE " + PLACE_NAME + " LIKE '%" + searchTerm + "%'";
+        sql += " LIMIT 0," + FOUND_LIMIT;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(sql, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(cursor.getColumnIndex(PLACE_NAME));
+                arr.add(name);
+
+                count++;
+            } while (cursor.moveToNext());
+        }
+        String[] result = new String[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            result[i] = arr.get(i);
+        }
+        Log.d("anjay","result: " + arr.size());
+        return result;
+    }
+
+    public String[] getTerminalbyTerminalId(String terminalId){
+        final int FOUND_LIMIT = 5;
+        ArrayList<String> arr = new ArrayList<>();
+
+        String sql = "";
+        sql += "SELECT * FROM " + TABLE_PLACE;
+        sql += " WHERE " + PLACE_ID + " LIKE '%" + terminalId + "%'";
         sql += " LIMIT 0," + FOUND_LIMIT;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -223,6 +278,34 @@ public class LocalDatabase extends SQLiteOpenHelper {
             result[i] = arr.get(i);
         }
         Log.d("anjay","result: " + arr.size());
+        return result;
+    }
+
+    public String[] getTrayek (String nomorAngkot) {
+        ArrayList<String> arr = new ArrayList<>();
+
+        String sql = "";
+        sql += "SELECT * FROM " + TABLE_ANGKOT;
+        sql += " WHERE " + ANGKOT_NAME + " LIKE '%" + nomorAngkot + "%'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(sql, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                String terminal1 = cursor.getString(cursor.getColumnIndex(ANGKOT_ID_TRANSIT_STOP_1));
+                String terminal2 = cursor.getString(cursor.getColumnIndex(ANGKOT_ID_TRANSIT_STOP_2));
+                arr.add(terminal1);
+                arr.add(terminal2);
+
+                count++;
+            } while (cursor.moveToNext());
+        }
+        String[] result = new String[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            result[i] = arr.get(i);
+        }
         return result;
     }
 }
