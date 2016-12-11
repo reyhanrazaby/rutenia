@@ -147,7 +147,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
 
         String sql = "";
         sql += "SELECT * FROM " + TABLE_ANGKOT;
-        sql += " WHERE " + ANGKOT_ID_TRANSIT_STOP_1 + " LIKE '%" + terminalId + "%'";
+        sql += " WHERE " + ANGKOT_ID_TRANSIT_STOP_1 + " = '" + terminalId + "' OR " + ANGKOT_ID_TRANSIT_STOP_2 + " = '" + terminalId + "'";
 
         SQLiteDatabase db = this.getWritableDatabase();
 

@@ -1,13 +1,11 @@
 package org.debatkusir.rutenia.Fragment;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,6 @@ import android.widget.TextView;
 import org.debatkusir.rutenia.LocalDatabase;
 import org.debatkusir.rutenia.R;
 import org.debatkusir.rutenia.Rutenia;
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
@@ -103,13 +100,15 @@ public class AngkotFragment extends Fragment {
 
                         } else {
                             angkotSpinner.setAdapter(null);
+                            hide(hasilPencarian);
                         }
                     } else {
                         angkotSpinner.setAdapter(null);
+                        hide(hasilPencarian);
                     }
                 } else {
                     angkotSpinner.setAdapter(null);
-                    hasilPencarian.setVisibility(View.GONE);
+                    hide(hasilPencarian);
                 }
             }
         });
@@ -118,7 +117,7 @@ public class AngkotFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.cariButton:
                         if(termninalAutoComplete.getText().toString().length() > 0 && angkotSpinner.getSelectedItem().toString().length() > 0) {
-                            slideToTop(hasilPencarian);
+                            show(hasilPencarian);
                             String[] arrTrayek = localDatabase.getTrayek(angkotSpinner.getSelectedItem().toString());
                             String[] arrTerminal1 = localDatabase.getTerminalbyTerminalId(arrTrayek[0]);
                             String[] arrTerminal2 = localDatabase.getTerminalbyTerminalId(arrTrayek[1]);
@@ -132,8 +131,16 @@ public class AngkotFragment extends Fragment {
         });
     }
 
-    public void slideToTop(View view){
+    public void show(CardView view){
         TranslateAnimation animate = new TranslateAnimation(-view.getHeight(),0,0,0);
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+        view.setVisibility(View.VISIBLE);
+    }
+
+    public void hide(CardView view){
+        TranslateAnimation animate = new TranslateAnimation(0,-2 * view.getHeight(),0,0);
         animate.setDuration(500);
         animate.setFillAfter(true);
         view.startAnimation(animate);
