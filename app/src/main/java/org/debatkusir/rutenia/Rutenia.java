@@ -30,8 +30,6 @@ public class Rutenia extends Application {
     public static String readTextFile(Context ctx, int resId)
     {
         InputStream inputStream = ctx.getResources().openRawResource(resId);
-
-<<<<<<< HEAD
         InputStreamReader inputreader = new InputStreamReader(inputStream);
         BufferedReader bufferedreader = new BufferedReader(inputreader);
         String line;
@@ -49,11 +47,6 @@ public class Rutenia extends Application {
             return null;
         }
         return stringBuilder.toString();
-=======
-        localDatabase.insertAngkot(0, "D11", "foto_d11", 1, 2);
-        localDatabase.insertAngkot(2, "D13", "foto_d13", 1, 0);
-        localDatabase.insertAngkot(3, "D14", "foto_d14", 2, 0);
->>>>>>> 7c7997d2dbba882927f4d963035063482f5bc2c0
     }
 
 
@@ -78,8 +71,8 @@ public class Rutenia extends Application {
         localDatabase.insertPlace(8, "Pasar Minggu", "Jakarta Selatan", "-6.284911, 106.843246", false);
 
         /* PEMBUATAN DATA ANGKOT */
-        localDatabase.insertAngkot(1000, "D11", "fotoD11", 2, 1);
-        localDatabase.insertAngkot(1001, "112", "foto112", 1, 0);
+        localDatabase.insertAngkot(1000, "D11", "foto_d11", 2, 1);
+        localDatabase.insertAngkot(1001, "112", "foto_112", 1, 0);
 
         /* PEMBUATAN DATA WAYPOINT */
         try {
@@ -97,7 +90,7 @@ public class Rutenia extends Application {
     public void setDataCreated() {
         SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("MySP", Context.MODE_PRIVATE).edit();
         editor.putBoolean("isDatabaseCreated",true);
-        editor.apply();
+        editor.commit();
     }
 
     public boolean isDataCreated() {

@@ -127,7 +127,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
         database.close();
     }
 
-<<<<<<< HEAD
     public void insertWaypoints(String[] waypointData) {
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -136,7 +135,7 @@ public class LocalDatabase extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
 
             String[] latLngs = waypointData[id].split("\n");
-            for(int index = 0; index < latLngs.length; index++) {
+            for (int index = 0; index < latLngs.length; index++) {
                 if (latLngs[index].length() > 0) {
                     String[] latLngArr = latLngs[index].split(" ");
                     double latitude = Double.parseDouble(latLngArr[0]);
@@ -151,19 +150,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
                 }
             }
         }
-=======
-    public void insertAngkot(int id, String name, String photo, int idTerminal1, int idTerminal2) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(ANGKOT_ID, id);
-        contentValues.put(ANGKOT_NAME, name);
-        contentValues.put(ANGKOT_PHOTO, photo);
-        contentValues.put(ANGKOT_ID_TRANSIT_STOP_1, idTerminal1);
-        contentValues.put(ANGKOT_ID_TRANSIT_STOP_2, idTerminal2);
-
-        database.insert(TABLE_ANGKOT, null, contentValues);
-        database.close();
     }
 
     public String[] getAngkotByTerminalId (int terminalId) {
@@ -216,7 +202,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
             result[i] = arr.get(i);
         }
         return result;
->>>>>>> 7c7997d2dbba882927f4d963035063482f5bc2c0
     }
 
     public String[] getTerminal(String searchTerm){
@@ -328,58 +313,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
         return result;
     }
 
-    public String[] getAngkotByTerminalId (int terminalId) {
-        ArrayList<String> arr = new ArrayList<>();
-
-        String sql = "";
-        sql += "SELECT * FROM " + TABLE_ANGKOT;
-        sql += " WHERE " + ANGKOT_ID_TRANSIT_STOP_1 + " = '" + terminalId + "' OR " + ANGKOT_ID_TRANSIT_STOP_2 + " = '" + terminalId + "'";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery(sql, null);
-        int count = 0;
-        if (cursor.moveToFirst()) {
-            do {
-                String name = cursor.getString(cursor.getColumnIndex(ANGKOT_NAME));
-                arr.add(name);
-
-                count++;
-            } while (cursor.moveToNext());
-        }
-        String[] result = new String[arr.size()];
-        for (int i = 0; i < arr.size(); i++) {
-            result[i] = arr.get(i);
-        }
-        return result;
-    }
-
-    public String[] getGambarAngkot (String nomorAngkot) {
-        ArrayList<String> arr = new ArrayList<>();
-
-        String sql = "";
-        sql += "SELECT * FROM " + TABLE_ANGKOT;
-        sql += " WHERE " + ANGKOT_NAME + " LIKE '%" + nomorAngkot + "%'";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery(sql, null);
-        int count = 0;
-        if (cursor.moveToFirst()) {
-            do {
-                String name = cursor.getString(cursor.getColumnIndex(ANGKOT_PHOTO));
-                arr.add(name);
-
-                count++;
-            } while (cursor.moveToNext());
-        }
-        String[] result = new String[arr.size()];
-        for (int i = 0; i < arr.size(); i++) {
-            result[i] = arr.get(i);
-        }
-        return result;
-    }
-
     public String[] getTerminalbyTerminalId(String terminalId){
         final int FOUND_LIMIT = 5;
         ArrayList<String> arr = new ArrayList<>();
@@ -406,51 +339,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
             result[i] = arr.get(i);
         }
         Log.d("anjay","result: " + arr.size());
-        return result;
-    }
-
-<<<<<<< HEAD
-    public String[] getTrayek (String nomorAngkot) {
-        ArrayList<String> arr = new ArrayList<>();
-
-        String sql = "";
-        sql += "SELECT * FROM " + TABLE_ANGKOT;
-        sql += " WHERE " + ANGKOT_NAME + " LIKE '%" + nomorAngkot + "%'";
-=======
-    public String[] getTerminalbyTerminalId(String terminalId){
-        final int FOUND_LIMIT = 5;
-        ArrayList<String> arr = new ArrayList<>();
-
-        String sql = "";
-        sql += "SELECT * FROM " + TABLE_PLACE;
-        sql += " WHERE " + PLACE_ID + " LIKE '%" + terminalId + "%'";
-        sql += " LIMIT 0," + FOUND_LIMIT;
->>>>>>> 7c7997d2dbba882927f4d963035063482f5bc2c0
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery(sql, null);
-        int count = 0;
-        if (cursor.moveToFirst()) {
-            do {
-<<<<<<< HEAD
-                String terminal1 = cursor.getString(cursor.getColumnIndex(ANGKOT_ID_TRANSIT_STOP_1));
-                String terminal2 = cursor.getString(cursor.getColumnIndex(ANGKOT_ID_TRANSIT_STOP_2));
-                arr.add(terminal1);
-                arr.add(terminal2);
-=======
-                String name = cursor.getString(cursor.getColumnIndex(PLACE_NAME));
-                arr.add(name);
->>>>>>> 7c7997d2dbba882927f4d963035063482f5bc2c0
-
-                count++;
-            } while (cursor.moveToNext());
-        }
-        String[] result = new String[arr.size()];
-        for (int i = 0; i < arr.size(); i++) {
-            result[i] = arr.get(i);
-        }
-<<<<<<< HEAD
         return result;
     }
 
@@ -475,38 +363,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
-
-=======
-        Log.d("anjay","result: " + arr.size());
-        return result;
-    }
-
-    public String[] getIdTerminal(String searchTerm){
-        final int FOUND_LIMIT = 5;
-        ArrayList<String> arr = new ArrayList<>();
-
-        String sql = "";
-        sql += "SELECT * FROM " + TABLE_PLACE;
-        sql += " WHERE " + PLACE_NAME + " LIKE '%" + searchTerm + "%'";
-        sql += " LIMIT 0," + FOUND_LIMIT;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery(sql, null);
-        int count = 0;
-        if (cursor.moveToFirst()) {
-            do {
-                String name = cursor.getString(cursor.getColumnIndex(PLACE_ID));
-                arr.add(name);
-
-                count++;
-            } while (cursor.moveToNext());
-        }
-        String[] result = new String[arr.size()];
-        for (int i = 0; i < arr.size(); i++) {
-            result[i] = arr.get(i);
-        }
-        Log.d("anjay","result: " + arr.size());
         return result;
     }
 
@@ -535,7 +391,6 @@ public class LocalDatabase extends SQLiteOpenHelper {
         for (int i = 0; i < arr.size(); i++) {
             result[i] = arr.get(i);
         }
->>>>>>> 7c7997d2dbba882927f4d963035063482f5bc2c0
         return result;
     }
 }
