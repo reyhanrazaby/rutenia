@@ -22,6 +22,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
 
 import java.util.ArrayList;
@@ -60,15 +61,6 @@ public class MapsActivity extends AppCompatActivity {
 
         adapter = new PagerAdapter (getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-
-
-        LatLng startPoint = new LatLng(-6.355163, 106.842950);
-        ArrayList<LatLng> polyline = new ArrayList<>();
-        polyline.add(new LatLng(-6.354114, 106.842958));
-        polyline.add(new LatLng(-6.354327, 106.842695));
-        polyline.add(new LatLng(-6.356241, 106.842781));
-
-        Log.d("anjas",""+ PolyUtil.isLocationOnPath(startPoint, polyline, true, 50));
 
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override

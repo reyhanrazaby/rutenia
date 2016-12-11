@@ -5,6 +5,7 @@ android {
     buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "org.debatkusir.rutenia"
+        applicationId "com.example.my.app"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
