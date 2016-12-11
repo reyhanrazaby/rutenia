@@ -31,6 +31,7 @@ public class Rutenia extends Application {
     {
         InputStream inputStream = ctx.getResources().openRawResource(resId);
 
+<<<<<<< HEAD
         InputStreamReader inputreader = new InputStreamReader(inputStream);
         BufferedReader bufferedreader = new BufferedReader(inputreader);
         String line;
@@ -48,6 +49,11 @@ public class Rutenia extends Application {
             return null;
         }
         return stringBuilder.toString();
+=======
+        localDatabase.insertAngkot(0, "D11", "foto_d11", 1, 2);
+        localDatabase.insertAngkot(2, "D13", "foto_d13", 1, 0);
+        localDatabase.insertAngkot(3, "D14", "foto_d14", 2, 0);
+>>>>>>> 7c7997d2dbba882927f4d963035063482f5bc2c0
     }
 
 
