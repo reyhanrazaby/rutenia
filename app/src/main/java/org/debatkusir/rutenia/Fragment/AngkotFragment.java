@@ -91,8 +91,8 @@ public class AngkotFragment extends Fragment {
 
         // Untuk map
 
-            peta.onCreate(savedInstanceState);
-            peta.onResume();
+        peta.onCreate(savedInstanceState);
+        peta.onResume();
 
 
         try {
@@ -164,6 +164,7 @@ public class AngkotFragment extends Fragment {
                                 @Override
                                 public void onMapReady(GoogleMap googleMap) {
                                     mMap = googleMap;
+                                    mMap.clear();
 
                                     PolylineOptions ruteAngkot = new PolylineOptions().
                                             geodesic(true).

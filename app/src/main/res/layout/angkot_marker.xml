@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="111dp"
+    android:layout_height="82dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_angkot_marker"
+        android:id="@+id/marker"/>
+
+    <ImageView
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="@mipmap/angkot1"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:scaleType="centerCrop"
+        android:id="@+id/angkotImage"/>
+
+    <TextView
+        android:layout_width="48dp"
+        android:layout_height="24dp"
+        android:textSize="20sp"
+        android:layout_toRightOf="@+id/angkotImage"
+        android:text="129"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:id="@+id/angkotName"
+        android:layout_marginTop="3dp"/>
+
+    <TextView
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:scrollHorizontally="false"
+        android:textSize="7sp"
+        android:layout_below="@+id/angkotName"
+        android:layout_toRightOf="@+id/angkotImage"
+        android:text="Terminal Depok - Terminal Kampung Rambutan"
+        android:gravity="left"
+        android:textColor="@color/colorWhite"
+        android:textStyle="normal"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:id="@+id/terminal"/>
+
+</RelativeLayout>

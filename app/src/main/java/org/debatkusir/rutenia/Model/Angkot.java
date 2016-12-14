@@ -1,27 +1,31 @@
 package org.debatkusir.rutenia.Model;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
- * Created by Reyhan on 12/7/2016.
+ * Created by Reyhan on 12/14/2016.
  */
 
 public class Angkot {
-    String id;
+    int id;
     String name;
-    Place transitStop1;
-    Place transitStop2;
+    String photo;
+    int transitStop1;
+    int transitStop2;
 
-    public Angkot(String id, String name, Place transitStop1, Place transitStop2) {
+    public Angkot(int id, String name, String photo, int transitStop1, int transitStop2) {
         this.id = id;
         this.name = name;
+        this.photo = photo;
         this.transitStop1 = transitStop1;
         this.transitStop2 = transitStop2;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -33,19 +37,27 @@ public class Angkot {
         this.name = name;
     }
 
-    public Place getTransitStop2() {
-        return transitStop2;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setTransitStop2(Place transitStop2) {
-        this.transitStop2 = transitStop2;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public Place getTransitStop1() {
+    public int getTransitStop1() {
         return transitStop1;
     }
 
-    public void setTransitStop1(Place transitStop1) {
+    public void setTransitStop1(int transitStop1) {
         this.transitStop1 = transitStop1;
+    }
+
+    public int getTransitStop2() {
+        return transitStop2;
+    }
+
+    public void setTransitStop2(int transitStop2) {
+        this.transitStop2 = transitStop2;
     }
 }
